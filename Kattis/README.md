@@ -3,6 +3,7 @@
 All of the problems I have solved on Kattis, sorted by difficulty from hardest to easiest in difficulty rating.  
 Note that difficulty ratings on some problems may have changed since last update.
 
+**Profile:** https://open.kattis.com/users/simen-sorensen  
 **Problems solved:** 1150  
 **Last updated:** 2025-12-16  
 
