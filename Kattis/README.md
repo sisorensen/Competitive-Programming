@@ -1,3 +1,5 @@
+# Solved Kattis problems
+
 All of the problems I have solved on Kattis, sorted by difficulty from hardest to easiest in difficulty rating.  
 The difficulty ratings on some problems may have changed since last update.
 
