@@ -29,43 +29,57 @@ def union(a,b):
         size[af] += size[bf]
     return 1
 
-#Part 1 - Using Union-find
-l = []
-for line in inpl:
-    l.append([int(x) for x in line.split(",")])
+def part1():
+    global parent, rank, size
+    l = []
+    for line in inpl:
+        l.append([int(x) for x in line.split(",")])
 
-parent = [i for i in range(len(l))]
-rank = [0]*len(l)
-size = [1]*len(l)
-dists = []
+    parent = [i for i in range(len(l))]
+    rank = [0]*len(l)
+    size = [1]*len(l)
+    dists = []
 
-for i in range(len(l)-1):
-    for j in range(i+1,len(l)):
-        d = dist(l[i],l[j])
-        dists.append((d,i,j))
-dists.sort()
+    for i in range(len(l)-1):
+        for j in range(i+1,len(l)):
+            d = dist(l[i],l[j])
+            dists.append((d,i,j))
+    dists.sort()
 
-for i in range(1000):
-    d,ci,cj = dists[i]
-    union(ci,cj)
+    for i in range(1000):
+        d,ci,cj = dists[i]
+        union(ci,cj)
 
-res = []
-for i in range(len(l)):
-    if parent[i] == i:
-        res.append(size[i])
-res.sort(reverse=True)
-print(f"Part 1: {res[0]*res[1]*res[2]}")
+    res = []
+    for i in range(len(l)):
+        if parent[i] == i:
+            res.append(size[i])
+    res.sort(reverse=True)
+    return res[0]*res[1]*res[2]
 
-#Part 2
-parent = [i for i in range(len(l))]
-rank = [0]*len(l)
-size = [1]*len(l)
+def part2():
+    global parent, rank, size
+    l = []
+    for line in inpl:
+        l.append([int(x) for x in line.split(",")])
+    parent = [i for i in range(len(l))]
+    rank = [0]*len(l)
+    size = [1]*len(l)
+    dists = []
 
-comp = len(l)
-for i in range(len(dists)):
-    d,ci,cj = dists[i]
-    if union(ci,cj):
-        comp -= 1
-    if comp == 1:break
+    for i in range(len(l)-1):
+        for j in range(i+1,len(l)):
+            d = dist(l[i],l[j])
+            dists.append((d,i,j))
+    dists.sort()
 
-print(f"Part 2: {l[ci][0]*l[cj][0]}")
+    comp = len(l)
+    for i in range(len(dists)):
+        _,ci,cj = dists[i]
+        if union(ci,cj):
+            comp -= 1
+        if comp == 1:break
+    return l[ci][0]*l[cj][0]
+
+print(f"Part 1: {part1()}")
+print(f"Part 2: {part2()}")
