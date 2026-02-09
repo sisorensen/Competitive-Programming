@@ -43,6 +43,7 @@ for i in range(r):
 
 # Removes a knight that has been taken. Need to update the attack array, and check if new squares are now free
 def knightrem(i,j):
+    knights[i][j] = 0
     l = []
     for ni, nj in mk:
         ci, cj = i+ni, j+nj
