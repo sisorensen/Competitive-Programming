@@ -16,19 +16,31 @@ from collections import deque
 import sys
 input = sys.stdin.readline
 
+# For storing knights and how many knights are attacking each square
+def knight(i, j):
+    knights[i][j] = 1
+    for ni, nj in movekn:
+        if 0 <= i+ni < r and 0 <= j+nj < c:
+            attack[i+ni][j+nj] += 1
+
+# Removes a knight that has been taken. Need to update the attack array, and check if new squares are now free
+def knightrem(i,j):
+    knights[i][j] = 0
+    l = []
+    for ni, nj in movekn:
+        ci, cj = i+ni, j+nj
+        if 0 <= ci < r and 0 <= cj < c: 
+            attack[ci][cj] -= 1
+            if attack[ci][cj] == 0:
+                l.append((ci, cj))
+    return l
+
 r, c = map(int, input().split())
 attack = [[0]*c for _ in range(r)]
 knights = [[0]*c for _ in range(r)]
 vis = [[0]*c for _ in range(r)]
-mk = [(2,1), (2,-1), (1,2), (1,-2), (-1,2), (-1,-2), (-2,1), (-2,-1)] 
+movekn = [(2,1), (2,-1), (1,2), (1,-2), (-1,2), (-1,-2), (-2,1), (-2,-1)] 
 q = deque()
-
-# For storing knights and how many knights are attacking each square
-def knight(i, j):
-    knights[i][j] = 1
-    for ni, nj in mk:
-        if 0 <= i+ni < r and 0 <= j+nj < c:
-            attack[i+ni][j+nj] += 1
 
 for i in range(r):
     s = input().strip()
@@ -41,19 +53,7 @@ for i in range(r):
         elif s[j] == "T":
             goal = (i, j)
 
-# Removes a knight that has been taken. Need to update the attack array, and check if new squares are now free
-def knightrem(i,j):
-    knights[i][j] = 0
-    l = []
-    for ni, nj in mk:
-        ci, cj = i+ni, j+nj
-        if 0 <= ci < r and 0 <= cj < c: 
-            attack[ci][cj] -= 1
-            if attack[ci][cj] == 0:
-                l.append((ci, cj))
-    return l
-
-mr = [(1,0), (0,1), (-1,0), (0,-1)] 
+mover = [(1,0), (0,1), (-1,0), (0,-1)] 
 possible = False
 while q:
     ci, cj = q.popleft()
@@ -62,7 +62,7 @@ while q:
         break
 
     # Considering each direction for the rook
-    for ni, nj in mr:
+    for ni, nj in mover:
         i, j = ci, cj
         i += ni
         j += nj
